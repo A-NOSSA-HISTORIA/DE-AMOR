@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nossa História</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&family=Playfair+Display:wght@400;700&display=swap');
+        
+        body {
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #ffebee, #f8bbd0);
+            font-family: 'Playfair Display', serif;
+            color: #5d4037;
+            text-align: center;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .container {
+            max-width: 800px;
+            padding: 20px;
+        }
+
+        img#amor {
+            width: 280px;
+            height: 280px;
+            border-radius: 50%;
+            border: 8px solid #ec407a;
+            box-shadow: 0 15px 35px rgba(236, 64, 122, 0.3);
+            margin: 40px 0 30px 0;
+            object-fit: cover;
+        }
+
+        h1 {
+            font-family: 'Dancing Script', cursive;
+            font-size: 3.5rem;
+            color: #c2185b;
+            margin: 10px 0;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+        }
+
+        audio {
+            width: 100%;
+            max-width: 500px;
+            margin: 30px 0;
+        }
+
+        #lyrics {
+            min-height: 180px;
+            font-size: 1.5rem;
+            line-height: 1.6;
+            margin: 30px auto;
+            padding: 25px;
+            background: rgba(255,255,255,0.85);
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            transition: all 0.4s ease;
+        }
+
+        #lyrics.active {
+            background: rgba(255, 235, 238, 0.95);
+            transform: scale(1.02);
+        }
+
+        .final-message {
+            font-family: 'Dancing Script', cursive;
+            font-size: 4rem;
+            color: #c2185b;
+            margin-top: 50px;
+            opacity: 0;
+            transition: opacity 2s;
+        }
+
+        .heart {
+            color: #e91e63;
+            font-size: 1.8rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <img id="amor" src="amor.jpg" alt="Nosso Amor">
+        
+        <h1>Nossa História</h1>
+        
+        <audio id="audio" controls>
+            <source src="NOSSA HISTÓRIA.mp3" type="audio/mpeg">
+            Seu navegador não suporta o elemento de áudio.
+        </audio>
+
+        <div id="lyrics">Clique em play para começar nossa história...</div>
+
+        <div class="final-message" id="finalMessage">
+            Te amo ❤️
+        </div>
+    </div>
+
+    <script>
+        const audio = document.getElementById('audio');
+        const lyricsDiv = document.getElementById('lyrics');
+        const finalMessage = document.getElementById('finalMessage');
+
+        // Legendas sincronizadas (em segundos)
+        const lyrics = [
+    { start: 14, end: 21, text: "Numa noite de quinta-feira, sem esperar acontecer," },
+    { start: 21, end: 28, text: "Uma conversa tão simples mudou o meu viver." },
+    { start: 28, end: 34, text: "As horas foram passando, nem vimos o tempo correr," },
+    { start: 34, end: 42, text: "E o meu coração, em silêncio, começou a te escolher." },
+
+    { start: 42, end: 48, text: "Então chegou setembro, dia vinte e um pra nós," },
+    { start: 48, end: 56, text: "Quando vi seu sorriso e ouvi de perto a sua voz." },
+    { start: 56, end: 62, text: "Naquele instante eu soube, sem precisar explicar," },
+    { start: 62, end: 69, text: "Que uma linda história estava prestes a começar." },
+
+    { start: 69, end: 76, text: "Porque estar com você é parar o tempo," },
+    { start:76, end: 83, text: "É viver cada abraço, cada beijo, cada momento." },
+    { start: 83, end: 90, text: "É sorrir sem motivo, é sonhar sem ter fim," },
+    { start: 90, end: 97, text: "É descobrir todos os dias o quanto você faz bem pra mim." },
+    { start: 97, end: 104, text: "Marcelo, meu amor, você é meu lugar," },
+    { start: 104, end: 111, text: "Meu porto seguro, meu jeito de amar." },
+    { start: 111, end: 117, text: "..." },
+    { start: 117, end: 123, text: "Você é sensível e gentil, tão inteligente também," },
+    { start: 123, end: 131, text: "Tem um jeito de cuidar que aquece e faz tão bem." },
+    { start: 131, end: 137, text: "Compartilhamos os nossos dias, a família, o trabalho, o viver," },
+    { start: 137, end: 144, text: "E em cada pequena história encontro mais razões pra te querer." },
+
+    { start: 144, end: 150, text: "Não somos um amor passageiro levado pelo vento," },
+    { start: 150, end: 158, text: "Temos valores, temos essência, temos sentimento." },
+    { start: 158, end: 165, text: "E quanto mais eu te conheço, mais eu quero caminhar," },
+    { start: 165, end: 172, text: "De mãos dadas com você, sem medo de amar." },
+
+    { start: 172, end: 178, text: "Porque estar com você é parar o tempo," },
+    { start: 178, end: 185, text: "É viver cada abraço, cada beijo, cada momento." },
+    { start: 185, end: 192, text: "É sorrir sem motivo, é sonhar sem ter fim," },
+    { start: 192, end: 199, text: "É descobrir todos os dias o quanto você faz bem pra mim." },
+    { start: 199, end: 207, text: "Marcelo, meu amor, você é meu lugar," },
+    { start: 207, end: 212, text: "Meu porto seguro, meu jeito de amar." },
+    { start: 212, end: 218, text: "..." },
+    { start: 218, end: 226, text: "Nove meses passaram como um lindo amanhecer," },
+    { start: 226, end: 233, text: "E cada dia ao seu lado me faz agradecer." },
+    { start: 233, end: 239, text: "Pela parceria leve, pelo carinho e pela paz," },
+    { start: 239, end: 249, text: "Por me fazer tão feliz como ninguém jamais." },
+
+    { start: 249, end: 256, text: "Porque estar com você é meu melhor caminho," },
+    { start: 256, end: 263, text: "É saber que na vida nunca mais estou sozinha." },
+    { start: 263, end: 270, text: "E se o amor é uma escolha, eu escolheria você," },
+    { start: 270, end: 277, text: "Hoje, amanhã e em cada novo amanhecer." },
+    { start: 277, end: 284, text: "Obrigada, meu amor, por tudo o que vivemos até aqui," },
+    { start: 294, end: 302, text: "Te amo cada dia mais... e quero o infinito com você." },
+    { start: 302, end: 313, text: "Obrigado por tudo❤" }
+];
+
+        let currentLyricIndex = -1;
+        let isEnded = false;
+
+        function updateLyrics(currentTime) {
+            let found = false;
+            
+            for (let i = 0; i < lyrics.length; i++) {
+                if (currentTime >= lyrics[i].start && currentTime <= lyrics[i].end) {
+                    if (currentLyricIndex !== i) {
+                        lyricsDiv.textContent = lyrics[i].text;
+                        lyricsDiv.classList.add('active');
+                        currentLyricIndex = i;
+                    }
+                    found = true;
+                    break;
+                }
+            }
+            
+            if (!found && currentLyricIndex !== -1) {
+                lyricsDiv.textContent = "";
+                lyricsDiv.classList.remove('active');
+                currentLyricIndex = -1;
+            }
+        }
+
+        audio.addEventListener('timeupdate', () => {
+            if (!isEnded) {
+                updateLyrics(audio.currentTime);
+            }
+        });
+
+        audio.addEventListener('ended', () => {
+            isEnded = true;
+            lyricsDiv.style.opacity = "0";
+            setTimeout(() => {
+                finalMessage.style.opacity = "1";
+            }, 800);
+        });
+
+        // Reiniciar ao tocar novamente
+        audio.addEventListener('play', () => {
+            if (isEnded) {
+                isEnded = false;
+                lyricsDiv.style.opacity = "1";
+                finalMessage.style.opacity = "0";
+                currentLyricIndex = -1;
+            }
+        });
+    </script>
+</body>
+</html>
